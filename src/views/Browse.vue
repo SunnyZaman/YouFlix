@@ -1,13 +1,14 @@
 <template>
-  <h1>Browse page</h1>
+  <Header />
 </template>
 
 <script>
 export default {
-
-}
+  components: {
+    Header
+  }
+};
 </script>
 
 <style>
-
 </style>
