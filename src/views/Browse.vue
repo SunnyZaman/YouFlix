@@ -1,13 +1,18 @@
 <template>
-  <Header />
+  <div>
+    <Header></Header>
+    <Hero></Hero>
+  </div>
 </template>
 
 <script>
-import Header from '../components/Header';
+import Header from "../components/Header";
+import Hero from "../components/Hero";
 
 export default {
   components: {
-    Header
+    Header,
+    Hero
   }
 };
 </script>
