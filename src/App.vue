@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app v-scroll="handleScroll">
     <!-- <v-app-bar
       app
       color="primary"
@@ -46,7 +46,29 @@
 
 <script>
 export default {
-  name: "App"
+  name: "App",
+  methods: {
+    handleScroll() {
+      // Change header color
+      const header = document.getElementById("header");
+      if (window.scrollY >= 10) {
+        header.style.setProperty("background-color", "black", "important");
+        // header.style.setProperty(
+        //   "background-image",
+        //   "linear-gradient(to bottom, rgba(0,0,0,0.7) 10%, rgba(0,0,0,0)",
+        //   "important"
+        // );
+      } else {
+        // header.style.setProperty(
+        //   "background-color",
+        //   "transparent",
+        //   "important"
+        // );
+                header.style.setProperty("background-color", "rgba(0,0,0,0.1)", "important");
+
+      }
+    }
+  }
 };
 </script>
 
