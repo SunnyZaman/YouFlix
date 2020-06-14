@@ -1,25 +1,26 @@
 <template>
   <v-img
-    :src="require('../assets/wallpaper.jpg')"
+    v-if="featuredVideo !== null"
+    :src="featuredVideo.snippet.thumbnails.maxres.url"
     class="hero"
     gradient="to left, rgba(0,0,0,0), rgba(0,0,0,1)"
   >
     <!-- <v-img :aspect-ratio="8/9" src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"> -->
-    <v-row  :justify="'start'"  style="height: 98vh;">
+    <v-row :justify="'start'" style="height: 98vh;">
       <v-col :align-self="'center'">
         <v-row>
-          <h2 class="ma-2">Title of video</h2>
+          <h2 class="ma-2">{{featuredVideo.snippet.title}}</h2>
         </v-row>
         <v-row>
           <h3 class="ma-2">#1 On Trending</h3>
         </v-row>
         <v-row>
-      <v-btn class="ma-2" depressed tile>
-        <v-icon left>mdi-play</v-icon>Play
-      </v-btn>
-      <v-btn class="ma-2" tile>
-        <v-icon left>mdi-information-outline</v-icon>More Info
-      </v-btn>
+          <v-btn class="ma-2" depressed tile>
+            <v-icon left>mdi-play</v-icon>Play
+          </v-btn>
+          <v-btn class="ma-2" tile>
+            <v-icon left>mdi-information-outline</v-icon>More Info
+          </v-btn>
         </v-row>
       </v-col>
     </v-row>
@@ -28,7 +29,8 @@
 
 <script>
 export default {
-  name: "Hero"
+  name: "Hero",
+  props: ['featuredVideo']
 };
 </script>
 
