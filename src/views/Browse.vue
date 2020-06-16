@@ -1,27 +1,31 @@
 <template>
   <div>
-    <Header></Header>
-    <Hero :featuredVideo="featuredVideo"></Hero>
+    <Header/>
+    <Hero :featuredVideo="featuredVideo"/>
+    <Carousel :trending="trending"/>
   </div>
 </template>
 
 <script>
+import Carousel from "../components/Carousel";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
 
 export default {
   components: {
+    Carousel,
     Header,
     Hero
   },
   data () {
     return {
-      featuredVideo: null
+      featuredVideo: null,
+      trending:null
     }
   },
   methods:{
     init(){
-       fetch(`${process.env.VUE_APP_VIDEO_ENDPOINT}?key=${process.env.VUE_APP_API_KEY}&part=snippet&chart=mostPopular&maxResults=10`)
+       fetch(`${process.env.VUE_APP_VIDEO_ENDPOINT}?key=${process.env.VUE_APP_API_KEY}&part=snippet&chart=mostPopular&maxResults=35`)
           .then(res => {
             return res.json();
           }).then(this.setResults);
@@ -39,9 +43,11 @@ export default {
           //   });
       },
     setResults (results) {
-      this.featuredVideo = results.items[0]
-      console.log("this is the results: ", results);
-      
+      console.log(JSON.parse(JSON.stringify(results.items)));
+      this.featuredVideo = results.items[0];
+            console.log(JSON.parse(JSON.stringify(results.items)));
+
+      this.trending = JSON.parse(JSON.stringify(results.items));      
     }
   },
   mounted(){

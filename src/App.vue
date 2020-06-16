@@ -52,7 +52,7 @@ export default {
       // Change header color
       const header = document.getElementById("header");
       if (window.scrollY >= 10) {
-        header.style.setProperty("background-color", "black", "important");
+        header.style.setProperty("background-color", "#121212", "important");
         // header.style.setProperty(
         //   "background-image",
         //   "linear-gradient(to bottom, rgba(0,0,0,0.7) 10%, rgba(0,0,0,0)",
