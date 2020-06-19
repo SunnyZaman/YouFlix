@@ -58,10 +58,10 @@ export default {
             this.featuredVideo = res.items[0];
             console.log(this.featuredVideo);
 
-            const vids = res.items;
-            while (vids.length > 0) {
-              this.trending.push(vids.splice(0, 5));
-            }
+            this.trending = res.items;
+            // while (vids.length > 0) {
+            //   this.trending.push(vids.splice(0, 5));
+            // }
           }),
           finalize(() => {
             this.dataLoaded = true;
