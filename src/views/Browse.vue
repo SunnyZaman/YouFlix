@@ -2,7 +2,7 @@
   <div>
     <Header></Header>
     <Hero :featuredVideo="featuredVideo" />
-    <Carousel v-if="dataLoaded" :trending="trending" />
+    <Carousel v-if="dataLoaded" :category="'Trending Now'" :videos="trending" />
   </div>
 </template>
 
@@ -10,6 +10,7 @@
 import Carousel from "../components/Carousel";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
+
 import { of } from "rxjs";
 import { ajax } from "rxjs/ajax";
 import { map, catchError, finalize } from "rxjs/operators";
