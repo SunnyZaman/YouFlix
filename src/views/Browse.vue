@@ -102,7 +102,7 @@ export default {
     //     return fetchCall;
     // },
     getTrendingVideos() {
-      const url = `${process.env.VUE_APP_VIDEO_ENDPOINT}?key=${process.env.VUE_APP_API_KEY}&part=snippet&chart=mostPopular&maxResults=35`;
+      const url = `${process.env.VUE_APP_VIDEO_ENDPOINT}?key=${process.env.VUE_APP_API_KEY}&part=snippet&chart=mostPopular&maxResults=36`;
       return ajax.getJSON(url).pipe(
         map(response => response),
         catchError(error => of(error))
