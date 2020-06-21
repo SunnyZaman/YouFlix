@@ -7,7 +7,7 @@
         <v-row class="video-container">
           <v-col
             class="pa-1"
-            v-for="(j,k) in videos.slice((i-1)*videosPerSlide,videosPerSlide*i)"
+            v-for="(video,k) in videos.slice((i-1)*videosPerSlide,videosPerSlide*i)"
             :key="category+i+k"
             xl="2"
             lg="2"
@@ -17,11 +17,12 @@
           >
             <!-- {{j}} -->
             <!-- {{i}} -->
-            <v-card class="video-card" href="#/browse" height="115px">
-              <v-img :src="j.snippet.thumbnails.high.url" width="100%" height="100%"></v-img>
+            <v-card class="video-card" hover href="#/browse" height="150">
+              <v-img :src="video.snippet.thumbnails.high.url" width="100%" height="100%"></v-img>
               <v-card-title primary-title>
-                <div class="video-text">
-                  <h3 class="headline">YOi</h3>
+                <div class="video-overlay">
+                  <v-icon x-large class="video-play">mdi-play-circle</v-icon>
+                  <!-- <p>{{video.snippet.title}}</p> -->
                 </div>
               </v-card-title>
             </v-card>
@@ -85,37 +86,67 @@ export default {
   z-index: 1;
 }
 .video-card {
-  position: relative;
-  transition: transform 300ms ease 100ms;
-  // &:hover {
-  //   transform: scale(1.5);
-  //   &:after {
-	// 		position: absolute;
-	// 		top: 0;
-	// 		background: rgba(black, .2);
-	// 		bottom: 0;
-	// 		left: 0;
-	// 		right: 0;
-	// 	}
-  // }
-  .video-text {
+  // position: relative;
+  transition: all 0.2s;
+  &:hover {
+    transform: scaleY(1.5);
+    transform: scaleX(1.1);
+
+    z-index: 1;
+    &:after {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+    .video-overlay {
+      opacity: 1;
+      // background-image: rgba(0,0,0,0.7) !important
+      // linear-gradient(
+      //   to bottom,
+      //   rgba(0, 0, 0, 0),
+      //   rgba(0, 0, 0, 1)
+      // ) !important;
+    }
+  }
+  .video-overlay {
+    opacity: 0;
+    margin: 0 auto;
+    text-align: center;
+    margin-left: -18px;
+    padding: 0 20px;
     position: absolute;
+    background: rgba(0, 0, 0, 0.7) !important;
+    top: 0;
     bottom: 0;
     width: 100%;
-    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .video-play {
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px #a70303;
+    }
   }
 }
-.video-container:hover .video-card {
-  transform: translateX(-25%);
-}
 
-.video-card :hover ~ .video-card  {
-  transform: translateX(25%);
-}
+// .video-container:focus-within .video-card ,
+// .video-container:hover .video-card  {
+//   transform: translateX(-25%);
+// }
 
-.video-container .video-card :hover {
-  transform: scale(1.5);
-}
+// .video-card :focus ~ .video-card ,
+// .video-card :hover ~ .video-card  {
+//   transform: translateX(25%);
+// }
+
+// .video-container .video-card :focus,
+// .video-container .video-card :hover {
+//   transform: scale(1.5);
+//   z-index: 1;
+// }
+
 // .v-carousel__controls {
 //   justify-content: flex-end !important;
 //   top: 0 !important;
