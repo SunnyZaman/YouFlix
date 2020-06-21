@@ -2,7 +2,10 @@
   <div>
     <Header></Header>
     <Hero :featuredVideo="featuredVideo" />
-    <Carousel v-if="dataLoaded" :category="'Trending Now'" :videos="trending" />
+    <div class="carousels-container">
+      <Carousel v-if="dataLoaded" :category="'Popular on YouTube'" :videos="trending" />
+      <Carousel v-if="dataLoaded" :category="'Trending Now'" :videos="trending" />
+    </div>
   </div>
 </template>
 
@@ -133,5 +136,8 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+.carousels-container {
+  margin-top: -80px;
+}
 </style>
