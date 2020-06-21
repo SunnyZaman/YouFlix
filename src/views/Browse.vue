@@ -2,7 +2,10 @@
   <div>
     <Header></Header>
     <Hero :featuredVideo="featuredVideo" />
-    <Carousel v-if="dataLoaded" :category="'Trending Now'" :videos="trending" />
+    <div class="carousels-container">
+      <Carousel v-if="dataLoaded" :category="'Popular on YouTube'" :videos="trending" />
+      <Carousel v-if="dataLoaded" :category="'Trending Now'" :videos="trending" />
+    </div>
   </div>
 </template>
 
@@ -102,7 +105,7 @@ export default {
     //     return fetchCall;
     // },
     getTrendingVideos() {
-      const url = `${process.env.VUE_APP_VIDEO_ENDPOINT}?key=${process.env.VUE_APP_API_KEY}&part=snippet&chart=mostPopular&maxResults=35`;
+      const url = `${process.env.VUE_APP_VIDEO_ENDPOINT}?key=${process.env.VUE_APP_API_KEY}&part=snippet&chart=mostPopular&maxResults=36`;
       return ajax.getJSON(url).pipe(
         map(response => response),
         catchError(error => of(error))
@@ -133,5 +136,8 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+.carousels-container {
+  margin-top: -80px;
+}
 </style>
