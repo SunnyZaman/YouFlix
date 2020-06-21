@@ -4,7 +4,7 @@
     <v-subheader>{{category}}</v-subheader>
     <v-carousel height="auto" delimiter-icon="mdi-minus" hide-delimiters>
       <v-carousel-item v-for=" i in slides" :key="i">
-        <v-row>
+        <v-row class="video-container">
           <v-col
             class="pa-1"
             v-for="(j,k) in videos.slice((i-1)*videosPerSlide,videosPerSlide*i)"
@@ -17,15 +17,14 @@
           >
             <!-- {{j}} -->
             <!-- {{i}} -->
-            <!-- <v-card> -->
-            <v-img :src="j.snippet.thumbnails.high.url" width="100%" height="115px"></v-img>
-            <!-- <v-card-title primary-title>
-                <div>
-                  <h3 class="headline mb-0">{{j+i}}</h3>
-                  <div>Card text</div>
+            <v-card class="video-card" href="#/browse" height="115px">
+              <v-img :src="j.snippet.thumbnails.high.url" width="100%" height="100%"></v-img>
+              <v-card-title primary-title>
+                <div class="video-text">
+                  <h3 class="headline">YOi</h3>
                 </div>
-            </v-card-title>-->
-            <!-- </v-card> -->
+              </v-card-title>
+            </v-card>
           </v-col>
         </v-row>
       </v-carousel-item>
@@ -83,9 +82,40 @@ export default {
   font-size: 1.3em;
   padding: 0;
   position: relative;
-  z-index: 500;
+  z-index: 1;
+}
+.video-card {
+  position: relative;
+  transition: transform 300ms ease 100ms;
+  // &:hover {
+  //   transform: scale(1.5);
+  //   &:after {
+	// 		position: absolute;
+	// 		top: 0;
+	// 		background: rgba(black, .2);
+	// 		bottom: 0;
+	// 		left: 0;
+	// 		right: 0;
+	// 	}
+  // }
+  .video-text {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+  }
+}
+.video-container:hover .video-card {
+  transform: translateX(-25%);
 }
 
+.video-card :hover ~ .video-card  {
+  transform: translateX(25%);
+}
+
+.video-container .video-card :hover {
+  transform: scale(1.5);
+}
 // .v-carousel__controls {
 //   justify-content: flex-end !important;
 //   top: 0 !important;
