@@ -1,30 +1,24 @@
 <template>
   <v-container fluid v-if="videos.length>0">
-    <!-- {{trendingData}} -->
     <v-subheader>{{category}}</v-subheader>
-    <v-carousel height="auto" delimiter-icon="mdi-minus" hide-delimiters>
+    <v-carousel height="auto" hide-delimiters>
       <v-carousel-item v-for=" i in slides" :key="i">
         <v-row class="video-container">
           <v-col
             class="pa-1"
-            v-for="(video,k) in videos.slice((i-1)*videosPerSlide,videosPerSlide*i)"
-            :key="category+i+k"
+            v-for="(video,j) in videos.slice((i-1)*videosPerSlide,videosPerSlide*i)"
+            :key="category+i+j"
             xl="2"
             lg="2"
             md="3"
             sm="4"
             cols="6"
           >
-            <!-- {{j}} -->
-            <!-- {{i}} -->
-            <v-card class="video-card" hover href="#/browse" height="150">
+            <v-card class="video-card" href="#/browse" height="150">
               <v-img :src="video.snippet.thumbnails.high.url" width="100%" height="100%"></v-img>
-              <v-card-title primary-title>
                 <div class="video-overlay">
-                  <v-icon x-large class="video-play">mdi-play-circle</v-icon>
-                  <!-- <p>{{video.snippet.title}}</p> -->
+                  <p>{{video.snippet.title}}</p>
                 </div>
-              </v-card-title>
             </v-card>
           </v-col>
         </v-row>
@@ -55,7 +49,6 @@ export default {
   },
   methods: {
     myEventHandler() {
-      // console.log("this is the e: ", e);
       this.responsiveCarouselCheck(window.innerWidth);
     },
     responsiveCarouselCheck(screenWidth) {
@@ -86,86 +79,33 @@ export default {
   z-index: 1;
 }
 .video-card {
-  // position: relative;
   transition: all 0.2s;
   &:hover {
-    transform: scaleY(1.5);
-    transform: scaleX(1.1);
-
+    transform: scale(1.5);
     z-index: 1;
-    &:after {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-    }
     .video-overlay {
       opacity: 1;
-      // background-image: rgba(0,0,0,0.7) !important
-      // linear-gradient(
-      //   to bottom,
-      //   rgba(0, 0, 0, 0),
-      //   rgba(0, 0, 0, 1)
-      // ) !important;
+      p{
+        padding-bottom: 20px;
+        padding-left: 5px;
+      }
     }
   }
   .video-overlay {
     opacity: 0;
-    margin: 0 auto;
-    text-align: center;
-    margin-left: -18px;
-    padding: 0 20px;
     position: absolute;
-    background: rgba(0, 0, 0, 0.7) !important;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
     top: 0;
     bottom: 0;
     width: 100%;
+    font-size: 10px;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-end;
     .video-play {
       border-radius: 50%;
-      box-shadow: 0 0 0 3px #a70303;
     }
   }
 }
-
-// .video-container:focus-within .video-card ,
-// .video-container:hover .video-card  {
-//   transform: translateX(-25%);
-// }
-
-// .video-card :focus ~ .video-card ,
-// .video-card :hover ~ .video-card  {
-//   transform: translateX(25%);
-// }
-
-// .video-container .video-card :focus,
-// .video-container .video-card :hover {
-//   transform: scale(1.5);
-//   z-index: 1;
-// }
-
-// .v-carousel__controls {
-//   justify-content: flex-end !important;
-//   top: 0 !important;
-//   background: none !important;
-
-//   .v-carousel__controls__item {
-//     margin: 0 2px !important;
-//     padding: 0 9px !important;
-//   }
-//   .v-btn--icon.v-size--small {
-//     height: 9px !important;
-//     width: 11px !important;
-//   }
-//   .v-btn--icon.v-size--small .v-icon {
-//     height: 1px !important;
-//   }
-//   .v-btn--round {
-//     border-radius: 0 !important;
-//   }
-// }
 </style>
 
