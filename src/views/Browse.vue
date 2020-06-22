@@ -56,6 +56,8 @@ export default {
         "part=snippet&type=video&videoCategoryId=20&maxResults=36"
       ).pipe(
         map(res => {
+          console.log(res);
+          
           this.gaming = res.items;
         })
       );

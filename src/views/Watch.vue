@@ -27,13 +27,14 @@ export default {
     videoResize(screenWidth, screenHeight) {
       const video = document.getElementById("video");
       video.style.width = screenWidth + "px";
-      video.style.height = screenHeight + "px";
+      video.style.height = (screenHeight-55) + "px";
     },
     createVideoFrame() {
       console.log(this.$route);
       this.videoId = this.$route.params.v;
       const src = `https://www.youtube.com/embed/${this.videoId}?rel=0&autoplay=1&mute=1&enablejsapi=1`;
       const video = document.getElementById("video");
+      video.style.marginTop = "48px";
       video.src = src;
       this.videoResize(window.innerWidth, window.innerHeight);
     }
@@ -42,4 +43,7 @@ export default {
 </script>
 
 <style lang="scss">
+#video-container{
+ background-color: #000000 !important;
+}
 </style>
