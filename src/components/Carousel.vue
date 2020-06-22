@@ -14,7 +14,7 @@
             sm="4"
             cols="6"
           >
-          <router-link :to="{ name: 'watch', params: { v: video.id }}">
+          <router-link :to="{ name: 'watch', params: { v: getParams(video.id) }}">
             <v-card class="video-card" height="150">
               <v-img :src="video.snippet.thumbnails.high.url" width="100%" height="100%"></v-img>
                 <div class="video-overlay">
@@ -67,6 +67,14 @@ export default {
         this.slides = 6;
         this.videosPerSlide = 6;
       }
+    },
+    getParams(videoId){
+     if(typeof videoId === 'string'){
+       return videoId;
+     }
+     else{
+       return videoId.videoId;
+     }
     }
   }
 };
