@@ -45,6 +45,8 @@ export default {
         "part=snippet&chart=mostPopular&maxResults=36"
       ).pipe(
         map(res => {
+          console.log(res);
+          
           this.featuredVideo = res.items[0];
           this.trending = res.items;
         })
