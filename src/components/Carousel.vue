@@ -14,12 +14,14 @@
             sm="4"
             cols="6"
           >
-            <v-card class="video-card" href="#/watch" height="150">
+          <router-link :to="{ name: 'watch', params: { v: video.id }}">
+            <v-card class="video-card" height="150">
               <v-img :src="video.snippet.thumbnails.high.url" width="100%" height="100%"></v-img>
                 <div class="video-overlay">
                   <p>{{video.snippet.title}}</p>
                 </div>
             </v-card>
+          </router-link>
           </v-col>
         </v-row>
       </v-carousel-item>
