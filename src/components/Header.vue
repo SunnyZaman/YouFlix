@@ -2,27 +2,34 @@
   <div>
     <v-app-bar color="rgba(0,0,0,0.1)" dense dark fixed elevation="0" id="header">
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
       <v-toolbar-title>YouFlix</v-toolbar-title>
-
       <v-spacer></v-spacer>
       <v-text-field
         :outlined="isOutlined"
         solo
         dense
+        :flat="isFlat"
         single-line
         hide-details
         class="shrink"
         :background-color="backgroundColor"
         color="rgb(229,9,20)"
         @click:prepend-inner="searchCheck"
-        :prepend-inner-icon="search?'mdi-close-circle':'mdi-magnify'"
+        :prepend-inner-icon="searching?'mdi-close-circle':'mdi-magnify'"
+        @focus="focus"
+        @focusout="focusOut"
       ></v-text-field>
 
       <v-menu left bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn icon v-bind="attrs" v-on="on">
-            <v-icon>mdi-dots-vertical</v-icon>
+          <v-btn v-bind="attrs" v-on="on" class="avatar-button mx-2">
+            <!-- <v-img
+              class="mx-2"
+              :src="require('@/assets/avatar.png')"
+              max-height="30"
+              max-width="30"
+              contain
+            ></v-img>-->
           </v-btn>
         </template>
 
@@ -40,19 +47,40 @@ export default {
   name: "Header",
   data() {
     return {
+      textField: null,
+      inputField: null,
       isOutlined: false,
       backgroundColor: "transparent",
-      search: false
+      searching: false,
+      isFlat: true
     };
+  },
+  mounted() {
+    this.textField = document.getElementsByClassName("v-text-field")[0];
+    this.inputField = this.textField.querySelector("input");
   },
   methods: {
     searchCheck() {
-      console.log("expand Search");
-      this.isOutlined = !this.isOutlined;
-      this.backgroundColor = this.search ? "transparent" : "black";
-      const text = document.getElementsByClassName("v-text-field")[0];
-      text.style.width = this.search ? "40px" : "300px";
-      this.search = !this.search;
+      if (this.searching) {
+        this.focusOut();
+      } else {
+        this.inputField.focus();
+      }
+    },
+    focus() {
+      this.backgroundColor = "black";
+      this.textField.style.width = "300px";
+      this.isFlat = false;
+      this.isOutlined = true;
+      this.searching = true;
+    },
+    focusOut() {
+      this.backgroundColor = "transparent";
+      this.textField.style.width = "40px";
+      this.isFlat = true;
+      this.isOutlined = false;
+      this.searching = false;
+      this.inputField.blur();
     }
   }
 };
@@ -64,5 +92,12 @@ export default {
 .v-text-field {
   width: 40px;
   transition: all 0.2s;
+  border: none;
+}
+.avatar-button {
+  height: 30px !important;
+  min-width: 30px !important;
+  background-image: url("~@/assets/avatar.png");
+  background-size: cover;
 }
 </style>

@@ -1,11 +1,10 @@
 <template>
   <v-img
     v-if="featuredVideo !== null"
-    :src="featuredVideo.snippet.thumbnails.maxres.url"
+    :src="getFeaturedImage(featuredVideo.snippet.thumbnails)"
     class="hero"
     gradient="to left, rgba(0,0,0,0), rgba(0,0,0,1)"
   >
-    <!-- <v-img :aspect-ratio="8/9" src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"> -->
     <v-row :justify="'start'" style="height: 98vh;">
       <v-col :align-self="'center'">
         <v-row>
@@ -30,7 +29,16 @@
 <script>
 export default {
   name: "Hero",
-  props: ["featuredVideo"]
+  props: ["featuredVideo"],
+  methods: {
+    getFeaturedImage(thumbnails) {
+      const thumbnail =
+        thumbnails.maxres !== undefined
+          ? thumbnails.maxres.url
+          : this.featuredVideo.snippet.thumbnails.standard.url;
+      return thumbnail;
+    }
+  }
 };
 </script>
 
