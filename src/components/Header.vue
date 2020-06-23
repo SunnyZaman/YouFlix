@@ -6,14 +6,18 @@
       <v-toolbar-title>YouFlix</v-toolbar-title>
 
       <v-spacer></v-spacer>
-
-      <v-btn icon>
-        <v-icon>mdi-heart</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
+      <v-text-field
+        :outlined="isOutlined"
+        solo
+        dense
+        single-line
+        hide-details
+        class="shrink"
+        :background-color="backgroundColor"
+        color="rgb(229,9,20)"
+        @click:prepend-inner="searchCheck"
+        :prepend-inner-icon="search?'mdi-close-circle':'mdi-magnify'"
+      ></v-text-field>
 
       <v-menu left bottom>
         <template v-slot:activator="{ on, attrs }">
@@ -33,11 +37,32 @@
 </template>
 <script>
 export default {
-  name: "Header"
+  name: "Header",
+  data() {
+    return {
+      isOutlined: false,
+      backgroundColor: "transparent",
+      search: false
+    };
+  },
+  methods: {
+    searchCheck() {
+      console.log("expand Search");
+      this.isOutlined = !this.isOutlined;
+      this.backgroundColor = this.search ? "transparent" : "black";
+      const text = document.getElementsByClassName("v-text-field")[0];
+      text.style.width = this.search ? "40px" : "300px";
+      this.search = !this.search;
+    }
+  }
 };
 </script>
 <style scoped>
-#header{
-    transition: all 0.2s ease-in-out;
+#header {
+  transition: all 0.2s ease-in-out;
+}
+.v-text-field {
+  width: 40px;
+  transition: all 0.2s;
 }
 </style>
