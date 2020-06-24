@@ -1,17 +1,17 @@
 <template>
   <div id="video-container">
-    <Header></Header>
+    <!-- <Header></Header> -->
     <iframe id="video" frameborder="0" allowfullscreen></iframe>
   </div>
 </template>
 
 <script>
-import Header from "../components/Header";
+// import Header from "../components/Header";
 
 export default {
-  components: {
-    Header
-  },
+  // components: {
+  //   Header
+  // },
   mounted() {
     this.createVideoFrame();
     window.addEventListener("resize", this.myEventHandler);

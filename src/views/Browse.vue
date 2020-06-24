@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Header></Header>
     <Hero :featuredVideo="featuredVideo" />
     <div v-if="dataLoaded" class="carousels-container">
       <Carousel :category="'Trending Now'" :videos="trending" />
@@ -11,7 +10,7 @@
 
 <script>
 import Carousel from "../components/Carousel";
-import Header from "../components/Header";
+// import Header from "../components/Header";
 import Hero from "../components/Hero";
 
 import { forkJoin, of } from "rxjs";
@@ -21,7 +20,7 @@ import { map, catchError } from "rxjs/operators";
 export default {
   components: {
     Carousel,
-    Header,
+    // Header,
     Hero
   },
   data() {

@@ -2,7 +2,7 @@
   <div>
     <v-app-bar color="rgba(0,0,0,0.1)" dense dark fixed elevation="0" id="header">
       <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
-      <v-btn text depressed>
+      <v-btn text depressed href="#/browse">
         <v-img :src="require('@/assets/logo-small.png')" max-height="30" max-width="35" contain></v-img>
         <v-img
           class="mx-2"
@@ -28,6 +28,8 @@
         :prepend-inner-icon="searching?'mdi-close-circle':'mdi-magnify'"
         @focus="focus"
         @focusout="focusOut"
+        v-model="searchValue"
+        change="event => searchChange(event)"
       ></v-text-field>
 
       <v-menu left bottom open-on-hover offset-y>
@@ -57,6 +59,7 @@ export default {
   name: "Header",
   data() {
     return {
+      searchValue: "",
       textField: null,
       inputField: null,
       isOutlined: false,
@@ -69,9 +72,15 @@ export default {
     this.textField = document.getElementsByClassName("v-text-field")[0];
     this.inputField = this.textField.querySelector("input");
   },
+  watch: {
+    searchValue() {
+      this.searchChange(this.searchValue);
+    }
+  },
   methods: {
     searchCheck() {
       if (this.searching) {
+        this.searchValue = "";
         this.focusOut();
       } else {
         this.inputField.focus();
@@ -85,12 +94,23 @@ export default {
       this.searching = true;
     },
     focusOut() {
-      this.backgroundColor = "transparent";
-      this.textField.style.width = "40px";
-      this.isFlat = true;
-      this.isOutlined = false;
-      this.searching = false;
-      this.inputField.blur();
+      if (this.searchValue === "") {
+        this.backgroundColor = "transparent";
+        this.textField.style.width = "40px";
+        this.isFlat = true;
+        this.isOutlined = false;
+        this.searching = false;
+        this.inputField.blur();
+      }
+    },
+    searchChange(value) {
+      console.log("...searching", value);
+      // if(value===""){
+
+      // }
+      // else{
+
+      // }
     }
   }
 };

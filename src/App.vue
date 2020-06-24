@@ -40,13 +40,18 @@
     <v-content>
       <HelloWorld/>
     </v-content>-->
+        <Header/>
     <router-view></router-view>
   </v-app>
 </template>
 
 <script>
+import Header from "./components/Header";
 export default {
   name: "App",
+  components: {
+    Header
+  },
   methods: {
     handleScroll() {
       // Change header color
