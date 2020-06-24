@@ -20,7 +20,7 @@
         @focusout="focusOut"
       ></v-text-field>
 
-      <v-menu left bottom>
+      <v-menu left bottom open-on-hover offset-y>
         <template v-slot:activator="{ on, attrs }">
           <v-btn v-bind="attrs" v-on="on" class="avatar-button mx-2">
             <!-- <v-img
@@ -34,8 +34,8 @@
         </template>
 
         <v-list>
-          <v-list-item v-for="n in 5" :key="n" @click="() => {}">
-            <v-list-item-title>Option {{ n }}</v-list-item-title>
+          <v-list-item>
+            <v-list-item-title>Logged in as Guest</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
