@@ -48,6 +48,8 @@ export default {
           console.log(res);
           
           this.featuredVideo = res.items[0];
+          console.log(this.featuredVideo);
+          
           this.trending = res.items;
         })
       );
