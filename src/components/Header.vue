@@ -1,8 +1,18 @@
 <template>
   <div>
     <v-app-bar color="rgba(0,0,0,0.1)" dense dark fixed elevation="0" id="header">
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
-      <v-toolbar-title>YouFlix</v-toolbar-title>
+      <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
+      <v-btn text depressed>
+        <v-img :src="require('@/assets/logo-small.png')" max-height="30" max-width="35" contain></v-img>
+        <v-img
+          class="mx-2"
+          :src="require('@/assets/logo.png')"
+          max-height="50"
+          max-width="100"
+          contain
+        ></v-img>
+      </v-btn>
+      <!-- <v-toolbar-title>YouFlix</v-toolbar-title> -->
       <v-spacer></v-spacer>
       <v-text-field
         :outlined="isOutlined"
