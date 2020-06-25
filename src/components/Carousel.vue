@@ -14,14 +14,14 @@
             sm="4"
             cols="6"
           >
-          <router-link :to="{ name: 'watch', params: { v: getParams(video.id) }}">
-            <v-card class="video-card" height="150">
-              <v-img :src="video.snippet.thumbnails.high.url" width="100%" height="100%"></v-img>
+            <router-link :to="{ name: 'watch', params: { v: getParams(video.id) }}">
+              <v-card class="video-card" height="150">
+                <v-img :src="video.snippet.thumbnails.high.url" width="100%" height="100%"></v-img>
                 <div class="video-overlay">
                   <p>{{video.snippet.title}}</p>
                 </div>
-            </v-card>
-          </router-link>
+              </v-card>
+            </router-link>
           </v-col>
         </v-row>
       </v-carousel-item>
@@ -68,13 +68,12 @@ export default {
         this.videosPerSlide = 6;
       }
     },
-    getParams(videoId){
-     if(typeof videoId === 'string'){
-       return videoId;
-     }
-     else{
-       return videoId.videoId;
-     }
+    getParams(videoId) {
+      if (typeof videoId === "string") {
+        return videoId;
+      } else {
+        return videoId.videoId;
+      }
     }
   }
 };
@@ -95,7 +94,7 @@ export default {
     z-index: 1;
     .video-overlay {
       opacity: 1;
-      p{
+      p {
         padding-bottom: 20px;
         padding-left: 5px;
       }
@@ -104,7 +103,11 @@ export default {
   .video-overlay {
     opacity: 0;
     position: absolute;
-  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.9) 0%,
+      rgba(0, 0, 0, 0) 100%
+    );
     top: 0;
     bottom: 0;
     width: 100%;

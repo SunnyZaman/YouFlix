@@ -105,12 +105,16 @@ export default {
     },
     searchChange(value) {
       console.log("...searching", value);
-      // if(value===""){
-
-      // }
-      // else{
-
-      // }
+      console.log( this.$route);
+      
+      if (value === "") {
+        if(this.$route.path!=='/browse'){
+          this.$router.push('/browse');
+        }
+      }
+      else{
+        this.$router.replace({ name: 'search', params: {q: this.searchValue} });
+      }
     }
   }
 };
