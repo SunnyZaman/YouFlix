@@ -71,6 +71,7 @@ export default {
   mounted() {
     this.textField = document.getElementsByClassName("v-text-field")[0];
     this.inputField = this.textField.querySelector("input");
+    this.checkSearchQuery();
   },
   watch: {
     searchValue() {
@@ -105,15 +106,25 @@ export default {
     },
     searchChange(value) {
       console.log("...searching", value);
-      console.log( this.$route);
-      
+      console.log(this.$route);
+
       if (value === "") {
-        if(this.$route.path!=='/browse'){
-          this.$router.push('/browse');
-        }
+          this.$router.push("/browse").catch(err => console.log(err));
+      } else {
+        this.$router.replace({
+          name: "search",
+          params: { q: this.searchValue }
+        }).catch(err => console.log(err));
       }
-      else{
-        this.$router.replace({ name: 'search', params: {q: this.searchValue} });
+    },
+    checkSearchQuery() {
+      console.log(this.$route.path);
+      const route = this.$route;
+      if (route.path !== "/search") {
+        if (route.params.q !== "") {
+          this.searchValue = route.params.q;
+          this.focus();
+        }
       }
     }
   }
