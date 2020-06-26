@@ -107,15 +107,16 @@ export default {
     searchChange(value) {
       console.log("...searching", value);
       console.log(this.$route);
-
-      if (value === "") {
+        if (value === "" || value !== undefined) {
           this.$router.push("/browse").catch(err => console.log(err));
-      } else {
-        this.$router.replace({
-          name: "search",
-          params: { q: this.searchValue }
-        }).catch(err => console.log(err));
-      }
+        } else {
+          this.$router
+            .replace({
+              name: "search",
+              params: { q: this.searchValue }
+            })
+            .catch(err => console.log(err));
+        }
     },
     checkSearchQuery() {
       console.log(this.$route.path);

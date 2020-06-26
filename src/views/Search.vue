@@ -25,10 +25,14 @@
 </template>
 
 <script>
+import YouTubeGet from "../services/youtubeGet";
+import { debounceTime, distinctUntilChanged, map } from "rxjs/operators";
+
 export default {
   data() {
     return {
-      videos: []
+      videos: [],
+      youtubeGet: new YouTubeGet()
     };
   },
   watch: {
@@ -42,6 +46,22 @@ export default {
   methods: {
     queryChange() {
       console.log("query change", this.$route.params.q);
+      this.getSearchResults();
+    },
+    getSearchResults() {
+      const query = this.$route.params.q;
+      const searchEP = process.env.VUE_APP_SEARCH_ENDPOINT;
+      console.log(query);
+      this.youtubeGet
+        .getVideos(searchEP, `part=snippet&type=video&q=${query}&maxResults=60`)
+        .pipe(
+          debounceTime(2000),
+          distinctUntilChanged(),
+          map(res => {
+            this.videos = res.items;
+          })
+        )
+        .subscribe();
     }
   }
 };
@@ -53,37 +73,37 @@ export default {
 }
 
 //add this to global styling
-.video-card {
-  transition: all 0.2s;
-  &:hover {
-    transform: scale(1.5);
-    z-index: 1;
-    .video-overlay {
-      opacity: 1;
-      p {
-        padding-bottom: 20px;
-        padding-left: 5px;
-      }
-    }
-  }
-  .video-overlay {
-    opacity: 0;
-    position: absolute;
-    background: linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0.9) 0%,
-      rgba(0, 0, 0, 0) 100%
-    );
-    top: 0;
-    bottom: 0;
-    width: 100%;
-    font-size: 10px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-end;
-    .video-play {
-      border-radius: 50%;
-    }
-  }
-}
+// .video-card {
+//   transition: all 0.2s;
+//   &:hover {
+//     transform: scale(1.5);
+//     z-index: 1;
+//     .video-overlay {
+//       opacity: 1;
+//       p {
+//         padding-bottom: 20px;
+//         padding-left: 5px;
+//       }
+//     }
+//   }
+//   .video-overlay {
+//     opacity: 0;
+//     position: absolute;
+//     background: linear-gradient(
+//       to top,
+//       rgba(0, 0, 0, 0.9) 0%,
+//       rgba(0, 0, 0, 0) 100%
+//     );
+//     top: 0;
+//     bottom: 0;
+//     width: 100%;
+//     font-size: 10px;
+//     display: flex;
+//     justify-content: flex-start;
+//     align-items: flex-end;
+//     .video-play {
+//       border-radius: 50%;
+//     }
+//   }
+// }
 </style>

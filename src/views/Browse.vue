@@ -13,9 +13,9 @@ import Carousel from "../components/Carousel";
 // import Header from "../components/Header";
 import Hero from "../components/Hero";
 
-import { forkJoin, of } from "rxjs";
-import { ajax } from "rxjs/ajax";
-import { map, catchError } from "rxjs/operators";
+import { forkJoin } from "rxjs";
+import { map } from "rxjs/operators";
+import YouTubeGet from '../services/youtubeGet';
 
 export default {
   components: {
@@ -28,7 +28,8 @@ export default {
       featuredVideo: null,
       trending: [],
       gaming: [],
-      dataLoaded: false
+      dataLoaded: false,
+      youtubeGet: new YouTubeGet()
     };
   },
   methods: {
@@ -39,7 +40,7 @@ export default {
       this.dataLoaded = false;
       const videoEP = process.env.VUE_APP_VIDEO_ENDPOINT;
       const searchEP = process.env.VUE_APP_SEARCH_ENDPOINT;
-      const trending$ = this.getVideos(
+      const trending$ = this.youtubeGet.getVideos(
         videoEP,
         "part=snippet&chart=mostPopular&maxResults=36"
       ).pipe(
@@ -52,7 +53,7 @@ export default {
           this.trending = res.items;
         })
       );
-      const gaming$ = this.getVideos(
+      const gaming$ = this.youtubeGet.getVideos(
         searchEP,
         "part=snippet&type=video&videoCategoryId=20&maxResults=36"
       ).pipe(
@@ -69,15 +70,14 @@ export default {
         }
       });
     },
-    getVideos(endpoint, filter) {
-      const url = `${endpoint}?key=${process.env.VUE_APP_API_KEY}&${filter}`;
-      return ajax.getJSON(url).pipe(
-        map(response => response),
-        catchError(error => of(error))
-      );
-    }
+    // getVideos(endpoint, filter) {
+    //   const url = `${endpoint}?key=${process.env.VUE_APP_API_KEY}&${filter}`;
+    //   return ajax.getJSON(url).pipe(
+    //     map(response => response),
+    //     catchError(error => of(error))
+    //   );
+    // }
   },
-
   mounted() {
     this.init();
   }
