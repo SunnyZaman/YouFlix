@@ -58,7 +58,6 @@ export default {
           debounceTime(2000),
           distinctUntilChanged(),
           map(res => {
-            console.log(res);
             this.videos = res.items;
           })
         )
@@ -74,37 +73,37 @@ export default {
 }
 
 //add this to global styling
-.video-card {
-  transition: all 0.2s;
-  &:hover {
-    transform: scale(1.5);
-    z-index: 1;
-    .video-overlay {
-      opacity: 1;
-      p {
-        padding-bottom: 20px;
-        padding-left: 5px;
-      }
-    }
-  }
-  .video-overlay {
-    opacity: 0;
-    position: absolute;
-    background: linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0.9) 0%,
-      rgba(0, 0, 0, 0) 100%
-    );
-    top: 0;
-    bottom: 0;
-    width: 100%;
-    font-size: 10px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-end;
-    .video-play {
-      border-radius: 50%;
-    }
-  }
-}
+// .video-card {
+//   transition: all 0.2s;
+//   &:hover {
+//     transform: scale(1.5);
+//     z-index: 1;
+//     .video-overlay {
+//       opacity: 1;
+//       p {
+//         padding-bottom: 20px;
+//         padding-left: 5px;
+//       }
+//     }
+//   }
+//   .video-overlay {
+//     opacity: 0;
+//     position: absolute;
+//     background: linear-gradient(
+//       to top,
+//       rgba(0, 0, 0, 0.9) 0%,
+//       rgba(0, 0, 0, 0) 100%
+//     );
+//     top: 0;
+//     bottom: 0;
+//     width: 100%;
+//     font-size: 10px;
+//     display: flex;
+//     justify-content: flex-start;
+//     align-items: flex-end;
+//     .video-play {
+//       border-radius: 50%;
+//     }
+//   }
+// }
 </style>
