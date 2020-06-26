@@ -107,8 +107,7 @@ export default {
     searchChange(value) {
       console.log("...searching", value);
       console.log(this.$route);
-      if (value !== undefined) {
-        if (value === "") {
+        if (value === "" || value !== undefined) {
           this.$router.push("/browse").catch(err => console.log(err));
         } else {
           this.$router
@@ -118,7 +117,6 @@ export default {
             })
             .catch(err => console.log(err));
         }
-      }
     },
     checkSearchQuery() {
       console.log(this.$route.path);

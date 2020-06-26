@@ -25,10 +25,14 @@
 </template>
 
 <script>
+import YouTubeGet from "../services/youtubeGet";
+import { debounceTime, distinctUntilChanged, map } from "rxjs/operators";
+
 export default {
   data() {
     return {
-      videos: []
+      videos: [],
+      youtubeGet: new YouTubeGet()
     };
   },
   watch: {
@@ -42,6 +46,23 @@ export default {
   methods: {
     queryChange() {
       console.log("query change", this.$route.params.q);
+      this.getSearchResults();
+    },
+    getSearchResults() {
+      const query = this.$route.params.q;
+      const searchEP = process.env.VUE_APP_SEARCH_ENDPOINT;
+      console.log(query);
+      this.youtubeGet
+        .getVideos(searchEP, `part=snippet&type=video&q=${query}&maxResults=60`)
+        .pipe(
+          debounceTime(2000),
+          distinctUntilChanged(),
+          map(res => {
+            console.log(res);
+            this.videos = res.items;
+          })
+        )
+        .subscribe();
     }
   }
 };
