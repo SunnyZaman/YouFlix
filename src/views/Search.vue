@@ -1,6 +1,6 @@
 <template>
   <div class="search-container">
-    <v-row>
+    <v-row v-if="videos.lenght>0">
       <v-col
         class="pa-1"
         v-for="(video,j) in videos"
@@ -21,6 +21,8 @@
         </router-link>
       </v-col>
     </v-row>
+    <!-- Will change to netflix no results -->
+    <p v-else>No Results</p>
   </div>
 </template>
 
