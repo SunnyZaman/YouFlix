@@ -1,33 +1,60 @@
 <template>
-  <div>
-    <Hero :featuredVideo="featuredVideo" />
-    <div v-if="dataLoaded" class="carousels-container">
-      <Carousel :category="'Trending Now'" :videos="trending" />
-      <Carousel :category="'Gaming'" :videos="gaming" />
+  <div v-if="dataLoaded" >
+    <Hero :featuredVideo="categories[0].videos[0]"/>
+    <div class="carousels-container">
+      <Carousel  v-for="category in categories" :key="category.title"
+      :category="category.title" :videos="category.videos"/>
     </div>
   </div>
 </template>
 
 <script>
 import Carousel from "../components/Carousel";
-// import Header from "../components/Header";
 import Hero from "../components/Hero";
 
 import { forkJoin } from "rxjs";
 import { map } from "rxjs/operators";
-import YouTubeGet from '../services/youtubeGet';
+import YouTubeGet from "../services/youtubeGet";
 
 export default {
   components: {
     Carousel,
-    // Header,
     Hero
   },
   data() {
     return {
-      featuredVideo: null,
-      trending: [],
-      gaming: [],
+      categories: [
+        {
+          title: "Trending Now",
+          videos: [],
+          endPoint: process.env.VUE_APP_VIDEO_ENDPOINT,
+          parameters: "part=snippet&chart=mostPopular&maxResults=36"
+        },
+        {
+          title: "Music",
+          videos: [],
+          endPoint: process.env.VUE_APP_SEARCH_ENDPOINT,
+          parameters: "part=snippet&type=video&videoCategoryId=10&maxResults=36"
+        },
+        {
+          title: "Gaming",
+          videos: [],
+          endPoint: process.env.VUE_APP_SEARCH_ENDPOINT,
+          parameters: "part=snippet&type=video&videoCategoryId=20&maxResults=36"
+        },
+        {
+          title: "Trailers",
+          videos: [],
+          endPoint: process.env.VUE_APP_SEARCH_ENDPOINT,
+          parameters: "part=snippet&type=video&videoCategoryId=44&maxResults=36"
+        },
+        {
+          title: "News & Politics",
+          videos: [],
+          endPoint: process.env.VUE_APP_SEARCH_ENDPOINT,
+          parameters: "part=snippet&type=video&videoCategoryId=25&maxResults=36"
+        }
+      ],
       dataLoaded: false,
       youtubeGet: new YouTubeGet()
     };
@@ -38,45 +65,23 @@ export default {
     },
     getVideoCategories() {
       this.dataLoaded = false;
-      const videoEP = process.env.VUE_APP_VIDEO_ENDPOINT;
-      const searchEP = process.env.VUE_APP_SEARCH_ENDPOINT;
-      const trending$ = this.youtubeGet.getVideos(
-        videoEP,
-        "part=snippet&chart=mostPopular&maxResults=36"
-      ).pipe(
-        map(res => {
-          console.log(res);
-          
-          this.featuredVideo = res.items[0];
-          console.log(this.featuredVideo);
-          
-          this.trending = res.items;
-        })
-      );
-      const gaming$ = this.youtubeGet.getVideos(
-        searchEP,
-        "part=snippet&type=video&videoCategoryId=20&maxResults=36"
-      ).pipe(
-        map(res => {
-          console.log(res);
-          
-          this.gaming = res.items;
-        })
-      );
-      const obsArray$ = [trending$, gaming$];
+      const obsArray$ = [];
+      this.categories.forEach(category=>{
+        const result$ = this.youtubeGet
+        .getVideos(category.endPoint, category.parameters)
+        .pipe(
+          map(res => {
+            category.videos = res.items;
+          })
+        );
+        obsArray$.push(result$);
+      });
       forkJoin(...obsArray$).subscribe({
         complete: () => {
           this.dataLoaded = true;
         }
       });
-    },
-    // getVideos(endpoint, filter) {
-    //   const url = `${endpoint}?key=${process.env.VUE_APP_API_KEY}&${filter}`;
-    //   return ajax.getJSON(url).pipe(
-    //     map(response => response),
-    //     catchError(error => of(error))
-    //   );
-    // }
+    }
   },
   mounted() {
     this.init();

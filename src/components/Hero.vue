@@ -48,6 +48,5 @@ export default {
   width: 100%;
   height: 98vh;
   padding-left: 60px;
-  /* top: 0; */
 }
 </style>
