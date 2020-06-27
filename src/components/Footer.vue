@@ -9,10 +9,11 @@
       tag="a"
     >{{ icon }}</v-icon>
     <v-row v-for="(row, i) in rows" :key="i">
-      <v-col v-for="(col, j) in row.cols" :key="i+j">
-        <a class="footer-link">{{col}}</a>
+      <v-col v-for="(col, j) in row.cols" :key="i+j" class="pb-0">
+        <a class="footer-text">{{col}}</a>
       </v-col>
     </v-row>
+    <p class="footer-text mt-3" v-html="'&copy 2020 YouFlix, Inc'"></p>
   </v-footer>
 </template>
 
@@ -47,7 +48,7 @@ export default {
   padding: 0 4%;
   background-color: #121212;
 }
-.footer-link{
+.footer-text{
     color: grey;
     font-size: 0.8em;
 }
