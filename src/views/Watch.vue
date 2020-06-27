@@ -1,13 +1,10 @@
 <template>
   <div id="video-container">
-    <!-- <Header></Header> -->
     <iframe id="video" frameborder="0" allowfullscreen></iframe>
   </div>
 </template>
 
 <script>
-// import Header from "../components/Header";
-
 export default {
   // components: {
   //   Header
@@ -15,7 +12,6 @@ export default {
   mounted() {
     this.createVideoFrame();
     window.addEventListener("resize", this.myEventHandler);
-    // this.videoResize(window.innerWidth, window.innerHeight);
   },
   destroyed() {
     window.removeEventListener("resize", this.myEventHandler);
@@ -30,7 +26,6 @@ export default {
       video.style.height = (screenHeight-55) + "px";
     },
     createVideoFrame() {
-      console.log(this.$route);
       this.videoId = this.$route.params.v;
       const src = `https://www.youtube.com/embed/${this.videoId}?rel=0&autoplay=1&mute=1&enablejsapi=1`;
       const video = document.getElementById("video");

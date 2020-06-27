@@ -1,7 +1,6 @@
 <template>
   <div>
     <v-app-bar color="rgba(0,0,0,0.1)" dense dark fixed elevation="0" id="header">
-      <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
       <v-btn text depressed href="#/browse">
         <v-img :src="require('@/assets/logo-small.png')" max-height="30" max-width="35" contain></v-img>
         <v-img
@@ -12,7 +11,6 @@
           contain
         ></v-img>
       </v-btn>
-      <!-- <v-toolbar-title>YouFlix</v-toolbar-title> -->
       <v-spacer></v-spacer>
       <v-text-field
         :outlined="isOutlined"
@@ -35,16 +33,8 @@
       <v-menu left bottom open-on-hover offset-y>
         <template v-slot:activator="{ on, attrs }">
           <v-btn v-bind="attrs" v-on="on" class="avatar-button mx-2">
-            <!-- <v-img
-              class="mx-2"
-              :src="require('@/assets/avatar.png')"
-              max-height="30"
-              max-width="30"
-              contain
-            ></v-img>-->
           </v-btn>
         </template>
-
         <v-list>
           <v-list-item>
             <v-list-item-title>Logged in as Guest</v-list-item-title>
@@ -108,8 +98,6 @@ export default {
       }
     },
     searchChange(value) {
-      console.log("...searching", value);
-      console.log(this.$route);
       if (value !== undefined) {
         if (value === "") {
           this.$router.push("/browse").catch(err => console.log(err));

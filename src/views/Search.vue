@@ -1,6 +1,6 @@
 <template>
   <div class="search-container">
-    <v-row v-if="videos.lenght>0">
+    <v-row v-if="videos.length>0">
       <v-col
         class="pa-1"
         v-for="(video,j) in videos"
@@ -21,8 +21,13 @@
         </router-link>
       </v-col>
     </v-row>
-    <!-- Will change to netflix no results -->
-    <p v-else>No Results</p>
+    <div v-else class="no-results-container">
+      <p>Your search for "{{$route.params.q}}" did not have any matches.</p>
+      <p>Suggestions:</p>
+      <ul >
+        <li v-for="suggestion in suggestions" :key="suggestion">{{suggestion}}</li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -40,7 +45,8 @@ export default {
   data() {
     return {
       videos: [],
-      youtubeGet: new YouTubeGet()
+      youtubeGet: new YouTubeGet(),
+      suggestions:['Try different keywords','Looking for a video or channel?','Try a genre, like comedy, romance, sports, or drama']
     };
   },
   watch: {
@@ -81,5 +87,12 @@ export default {
 .search-container {
   margin-top: 48px;
   padding: 0 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.no-results-container {
+  margin-top: 48px;
 }
 </style>
