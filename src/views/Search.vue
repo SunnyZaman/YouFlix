@@ -1,6 +1,6 @@
 <template>
   <div class="search-container">
-    <v-row>
+    <v-row v-if="videos.lenght>0">
       <v-col
         class="pa-1"
         v-for="(video,j) in videos"
@@ -21,12 +21,20 @@
         </router-link>
       </v-col>
     </v-row>
+    <!-- Will change to netflix no results -->
+    <p v-else>No Results</p>
   </div>
 </template>
 
 <script>
 import YouTubeGet from "../services/youtubeGet";
-import { debounceTime, distinctUntilChanged, map } from "rxjs/operators";
+import { of } from "rxjs";
+import {
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  switchMap
+} from "rxjs/operators";
 
 export default {
   data() {
@@ -37,31 +45,33 @@ export default {
   },
   watch: {
     "$route.params.q"() {
-      this.queryChange();
+      this.queryChange()
+        .pipe(
+          switchMap(query => {
+            return this.getSearchResults(query);
+          }),
+          debounceTime(1000),
+          distinctUntilChanged()
+        )
+        .subscribe();
     }
   },
   mounted() {
-    console.log("route params: ", this.$route.params.q);
+    this.getSearchResults(this.$route.params.q).subscribe();
   },
   methods: {
     queryChange() {
-      console.log("query change", this.$route.params.q);
-      this.getSearchResults();
+      return of(this.$route.params.q);
     },
-    getSearchResults() {
-      const query = this.$route.params.q;
+    getSearchResults(query) {
       const searchEP = process.env.VUE_APP_SEARCH_ENDPOINT;
-      console.log(query);
-      this.youtubeGet
-        .getVideos(searchEP, `part=snippet&type=video&q=${query}&maxResults=60`)
+      return this.youtubeGet
+        .getVideos(searchEP, `part=snippet&type=video&q=${query}&maxResults=24`)
         .pipe(
-          debounceTime(2000),
-          distinctUntilChanged(),
           map(res => {
             this.videos = res.items;
           })
-        )
-        .subscribe();
+        );
     }
   }
 };
@@ -70,40 +80,6 @@ export default {
 <style lang="scss">
 .search-container {
   margin-top: 48px;
+  padding: 0 50px;
 }
-
-//add this to global styling
-// .video-card {
-//   transition: all 0.2s;
-//   &:hover {
-//     transform: scale(1.5);
-//     z-index: 1;
-//     .video-overlay {
-//       opacity: 1;
-//       p {
-//         padding-bottom: 20px;
-//         padding-left: 5px;
-//       }
-//     }
-//   }
-//   .video-overlay {
-//     opacity: 0;
-//     position: absolute;
-//     background: linear-gradient(
-//       to top,
-//       rgba(0, 0, 0, 0.9) 0%,
-//       rgba(0, 0, 0, 0) 100%
-//     );
-//     top: 0;
-//     bottom: 0;
-//     width: 100%;
-//     font-size: 10px;
-//     display: flex;
-//     justify-content: flex-start;
-//     align-items: flex-end;
-//     .video-play {
-//       border-radius: 50%;
-//     }
-//   }
-// }
 </style>

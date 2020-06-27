@@ -76,6 +76,9 @@ export default {
   watch: {
     searchValue() {
       this.searchChange(this.searchValue);
+    },
+    "$route.path"() {
+      this.pathChange();
     }
   },
   methods: {
@@ -107,7 +110,8 @@ export default {
     searchChange(value) {
       console.log("...searching", value);
       console.log(this.$route);
-        if (value === "" || value !== undefined) {
+      if (value !== undefined) {
+        if (value === "") {
           this.$router.push("/browse").catch(err => console.log(err));
         } else {
           this.$router
@@ -117,12 +121,18 @@ export default {
             })
             .catch(err => console.log(err));
         }
+      }
+    },
+    pathChange() {
+      if (!this.$route.path.includes("search")) {
+        this.searchValue = "";
+        this.focusOut();
+      }
     },
     checkSearchQuery() {
-      console.log(this.$route.path);
       const route = this.$route;
       if (route.path !== "/search") {
-        if (route.params.q !== "") {
+        if (route.params.q !== "" && route.params.q !== undefined) {
           this.searchValue = route.params.q;
           this.focus();
         }
