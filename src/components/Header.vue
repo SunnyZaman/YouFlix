@@ -2,9 +2,9 @@
   <div>
     <v-app-bar color="rgba(0,0,0,0.1)" dense dark fixed elevation="0" id="header">
       <v-btn text depressed href="#/browse">
-        <v-img :src="require('@/assets/logo-small.png')" max-height="30" max-width="35" contain></v-img>
+        <v-img :src="require('@/assets/icon.png')" max-height="30" max-width="35" contain></v-img>
         <v-img
-          class="mx-2"
+          class="mx-2 d-none d-sm-flex"
           :src="require('@/assets/logo.png')"
           max-height="50"
           max-width="100"
