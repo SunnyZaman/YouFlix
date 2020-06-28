@@ -1,5 +1,6 @@
 <template>
-  <v-footer padless app inset absolute class="footer-container">
+  <v-footer padless  inset  class="footer-container">
+    <div class="inner-container">
     <v-icon
       v-for="icon in icons"
       :key="icon"
@@ -14,6 +15,7 @@
       </v-col>
     </v-row>
     <p class="footer-text mt-3" v-html="'&copy 2020 YouFlix, Inc'"></p>
+    </div>
   </v-footer>
 </template>
 
@@ -42,11 +44,15 @@ export default {
 </script>
 <style lang="scss" scoped>
 .footer-container {
-  display: block;
-  max-width: 980px;
-  margin: 20px auto 0;
-  padding: 0 4%;
-  background-color: #121212;
+  height:300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #121212 !important;
+}
+.inner-container{
+  width: 980px;
+  padding:0 10px;
 }
 .footer-text{
     color: grey;
