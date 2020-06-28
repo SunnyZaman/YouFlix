@@ -2,9 +2,9 @@
   <div>
     <v-app-bar color="rgba(0,0,0,0.1)" dense dark fixed elevation="0" id="header">
       <v-btn text depressed href="#/browse">
-        <v-img :src="require('@/assets/logo-small.png')" max-height="30" max-width="35" contain></v-img>
+        <v-img :src="require('@/assets/icon.png')" max-height="30" max-width="35" contain></v-img>
         <v-img
-          class="mx-2"
+          class="mx-2 d-none d-sm-flex"
           :src="require('@/assets/logo.png')"
           max-height="50"
           max-width="100"
@@ -32,8 +32,7 @@
 
       <v-menu left bottom open-on-hover offset-y>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn v-bind="attrs" v-on="on" class="avatar-button mx-2">
-          </v-btn>
+          <v-btn v-bind="attrs" v-on="on" class="avatar-button mx-2"></v-btn>
         </template>
         <v-list>
           <v-list-item>
@@ -61,6 +60,7 @@ export default {
   mounted() {
     this.textField = document.getElementsByClassName("v-text-field")[0];
     this.inputField = this.textField.querySelector("input");
+    this.footerCheck();
     this.checkSearchQuery();
   },
   watch: {
@@ -112,9 +112,18 @@ export default {
       }
     },
     pathChange() {
+      this.footerCheck();
       if (!this.$route.path.includes("search")) {
         this.searchValue = "";
         this.focusOut();
+      }
+    },
+    footerCheck() {
+      const footer = document.querySelector("footer");
+      if (this.$route.path.includes("watch")) {
+        footer.style.display = "none";
+      } else {
+        footer.style.display = "flex";
       }
     },
     checkSearchQuery() {
