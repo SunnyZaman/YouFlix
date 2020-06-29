@@ -14,10 +14,10 @@
           <h3 class="ma-2">#1 On Trending</h3>
         </v-row>
         <v-row>
-          <v-btn class="ma-2" depressed tile>
+          <v-btn class="ma-2 play-button" large>
             <v-icon left>mdi-play</v-icon>Play
           </v-btn>
-          <v-btn class="ma-2" tile>
+          <v-btn class="ma-2 info-button" large>
             <v-icon left>mdi-information-outline</v-icon>More Info
           </v-btn>
         </v-row>
@@ -48,5 +48,14 @@ export default {
   width: 100%;
   height: 98vh;
   padding-left: 60px;
+}
+.play-button {
+  background-color: #ffffff !important;
+  color: #000000;
+  font-weight: 700;
+}
+.info-button {
+  background-color: #9e9e9e6e !important;
+  font-weight: 700;
 }
 </style>
